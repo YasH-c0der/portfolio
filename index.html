@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Yash Agarwal — Full Stack Developer & Engineering Student at JSSATE Noida. Building robust, responsive web experiences.">
+    <title>YASH AGARWAL — Full Stack Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ============================================
+           RESET & TOKENS
+           ============================================ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #F5F4EF;
+            --text: #0D0D0D;
+            --muted: #3A3A36;
+            --label: #888880;
+            --border: #D4D0C8;
+            --tag-bg: #E8E5DC;
+            --invert-bg: #0D0D0D;
+            --invert-text: #F5F4EF;
+
+            --hero: clamp(60px, 10vw, 130px);
+            --h2: 48px;
+            --h3: 24px;
+            --label-size: 11px;
+            --body-size: 16px;
+            --nav-size: 12px;
+            --tag-size: 11px;
+
+            --section-y: 120px;
+            --section-y-mobile: 64px;
+            --card-p: 32px;
+            --gap: 24px;
+            --max-w: 1200px;
+            --h-pad: 40px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: var(--body-size);
+            font-weight: 400;
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        a.btn {
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            background: var(--invert-bg);
+            color: var(--invert-text);
+            padding: 14px 28px;
+            font-size: var(--nav-size);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 0;
+            border: 1.5px solid var(--invert-bg);
+            transition: background 200ms ease, color 200ms ease;
+        }
+
+        button:hover,
+        a.btn:hover {
+            background: var(--bg);
+            color: var(--text);
+            border-color: var(--text);
+        }
+
+        /* ---- Contact buttons: smoother & warmer ---- */
+        .contact-buttons .btn {
+            position: relative;
+            overflow: hidden;
+            padding: 16px 36px;
+            transition:
+                background 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                color 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                border-color 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .contact-buttons .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #3A3A36;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 280ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 0;
+        }
+
+        .contact-buttons .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-buttons .btn:hover {
+            background: #3A3A36;
+            color: #F5F4EF;
+            border-color: #3A3A36;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(58, 58, 54, 0.25);
+        }
+
+        .contact-buttons .btn:hover::before {
+            transform: scaleX(1);
+        }
+
+        .contact-buttons .btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(58, 58, 54, 0.15);
+            transition-duration: 80ms;
+        }
+
+        /* Staggered entrance for each button */
+        .contact-buttons .btn:nth-child(1) {
+            transition-delay: 0ms;
+        }
+
+        .contact-buttons .btn:nth-child(2) {
+            transition-delay: 40ms;
+        }
+
+        .contact-buttons .btn:nth-child(3) {
+            transition-delay: 80ms;
+        }
+
+        .contact-buttons .btn:nth-child(4) {
+            transition-delay: 120ms;
+        }
+
+        .container {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 var(--h-pad);
+        }
+
+        .section-label {
+            display: block;
+            font-size: var(--label-size);
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--label);
+            margin-bottom: 32px;
+        }
+
+        /* ============================================
+           SCROLL REVEAL
+           ============================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 400ms ease-out, transform 400ms ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           SECTION 1 — NAVBAR
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            height: 64px;
+        }
+
+        .navbar .container {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: var(--nav-size);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text);
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text);
+            transition: width 200ms ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hamburger */
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .nav-hamburger span {
+            display: block;
+            width: 24px;
+            height: 1.5px;
+            background: var(--text);
+            transition: transform 200ms ease, opacity 200ms ease;
+        }
+
+        .nav-hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 5px);
+        }
+
+        .nav-hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -5px);
+        }
+
+        /* Mobile menu */
+        .nav-mobile {
+            display: none;
+            position: fixed;
+            top: 64px;
+            left: 0;
+            width: 100%;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 32px var(--h-pad);
+            z-index: 99;
+        }
+
+        .nav-mobile.open {
+            display: block;
+        }
+
+        .nav-mobile a {
+            display: block;
+            font-size: var(--nav-size);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-mobile a:last-child {
+            border-bottom: none;
+        }
+
+        /* ============================================
+           SECTION 2 — HERO
+           ============================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0 var(--h-pad) 80px;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-label {
+            font-size: var(--label-size);
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--label);
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: var(--hero);
+            font-weight: 800;
+            line-height: 0.88;
+            letter-spacing: -3px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .hero-bottom {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-bio {
+            font-size: var(--body-size);
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 520px;
+        }
+
+        /* ============================================
+           SECTION 3 — SKILLS MARQUEE
+           ============================================ */
+        .marquee-strip {
+            background: var(--invert-bg);
+            color: var(--invert-text);
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 18px 0;
+        }
+
+        .marquee-track {
+            display: inline-flex;
+            animation: marquee 25s linear infinite;
+        }
+
+        .marquee-track span {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 0 24px;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ============================================
+           SECTION 4 — WORK EXPERIENCE
+           ============================================ */
+        .work-section {
+            padding: var(--section-y) 0;
+        }
+
+        .work-entry {
+            display: grid;
+            grid-template-columns: 40% 60%;
+            gap: var(--gap);
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .work-entry:last-child {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .work-left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .work-number {
+            font-size: 100px;
+            font-weight: 800;
+            color: var(--tag-bg);
+            line-height: 1;
+            letter-spacing: -3px;
+        }
+
+        .work-role {
+            font-size: var(--h3);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 8px;
+        }
+
+        .work-company {
+            font-size: var(--body-size);
+            font-weight: 600;
+            color: var(--muted);
+        }
+
+        .work-date {
+            display: inline-block;
+            font-size: var(--tag-size);
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: var(--tag-bg);
+            padding: 4px 12px;
+            margin-top: 8px;
+            width: fit-content;
+        }
+
+        .work-right {
+            font-size: var(--body-size);
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .work-right ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .work-right li {
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .work-right li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--label);
+        }
+
+        /* ============================================
+           SECTION 5 — PROJECTS
+           ============================================ */
+        .projects-section {
+            padding: 0 0 var(--section-y);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--gap);
+        }
+
+        .project-card {
+            border: 1.5px solid var(--border);
+            background: var(--bg);
+            padding: var(--card-p);
+            border-radius: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: border-color 200ms ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--text);
+        }
+
+        .project-num {
+            font-size: var(--tag-size);
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: var(--tag-bg);
+            padding: 4px 12px;
+            width: fit-content;
+        }
+
+        .project-title {
+            font-size: var(--h3);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .project-tags span {
+            font-size: var(--tag-size);
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: var(--tag-bg);
+            padding: 4px 12px;
+        }
+
+        .project-desc {
+            color: var(--muted);
+            line-height: 1.7;
+            flex: 1;
+        }
+
+        .project-link {
+            font-size: var(--nav-size);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            position: relative;
+        }
+
+        .project-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text);
+            transition: width 200ms ease;
+        }
+
+        .project-link:hover::after {
+            width: 100%;
+        }
+
+        /* ============================================
+           SECTION 6 — ABOUT
+           ============================================ */
+        .about-section {
+            padding: var(--section-y) 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: flex-start;
+        }
+
+        .about-heading {
+            font-size: var(--h2);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .about-text {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 24px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .about-stats span {
+            font-size: var(--tag-size);
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: var(--tag-bg);
+            padding: 4px 12px;
+        }
+
+        .about-education {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        .about-education strong {
+            color: var(--text);
+        }
+
+        /* ============================================
+           SECTION 7 — CONTACT / FOOTER
+           ============================================ */
+        .contact-section {
+            padding: var(--section-y) 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-heading {
+            font-size: clamp(36px, 6vw, 72px);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 24px;
+        }
+
+        .contact-sub {
+            font-size: var(--label-size);
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--label);
+            margin-bottom: 48px;
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-bar {
+            text-align: center;
+            padding: 32px var(--h-pad);
+            border-top: 1px solid var(--border);
+            margin-top: var(--section-y);
+        }
+
+        .footer-bar p {
+            font-size: var(--label-size);
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--label);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            :root {
+                --h-pad: 20px;
+                --section-y: 64px;
+                --card-p: 24px;
+                --h2: 32px;
+                --h3: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-hamburger {
+                display: flex;
+            }
+
+            .hero {
+                padding-bottom: 48px;
+            }
+
+            .hero h1 {
+                font-size: clamp(40px, 10vw, 70px);
+                letter-spacing: -2px;
+            }
+
+            .hero-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 24px;
+            }
+
+            .work-entry {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 32px 0;
+            }
+
+            .work-number {
+                font-size: 60px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .about-heading {
+                font-size: 32px;
+            }
+
+            .contact-heading {
+                font-size: clamp(28px, 8vw, 48px);
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-buttons .btn {
+                width: 100%;
+                max-width: 280px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==========================================
+         SECTION 1 — NAVBAR
+         ========================================== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="nav-logo">YASH</a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#work">Work</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="nav-mobile" id="nav-mobile">
+        <a href="#work">Work</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <!-- ==========================================
+         SECTION 2 — HERO
+         ========================================== -->
+    <section class="hero" id="hero">
+        <p class="hero-label reveal">NOIDA, INDIA · OPEN TO WORK</p>
+        <h1 class="reveal">I AM YASH<br>AND I BUILD<br>FULL STACK<br>WEBSITES</h1>
+        <div class="hero-bottom reveal">
+            <p class="hero-bio">Results-oriented Engineering Student with mastery in Web Development and high
+                problem-solving skills.</p>
+            <a href="#work" class="btn" id="hero-cta">VIEW MY WORK</a>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 3 — SKILLS MARQUEE
+         ========================================== -->
+    <div class="marquee-strip" id="skills">
+        <div class="marquee-track">
+            <span>FULL STACK WEB DEVELOPMENT ·</span>
+            <span>AI-POWERED DEVELOPMENT ·</span>
+            <span>DATA STRUCTURES &amp; ALGORITHMS ·</span>
+            <span>PROMPT ENGINEERING ·</span>
+            <span>PROJECT MANAGEMENT ·</span>
+            <span>AI INTEGRATION IN WEB APPS ·</span>
+            <span>VIBE CODING ·</span>
+            <span>AI-ASSISTED UI/UX DESIGN ·</span>
+            <span>VIDEO EDITING ·</span>
+            <span>RAPID PROTOTYPING WITH AI ·</span>
+            <span>BASIC GAME DEVELOPMENT ·</span>
+            <span>COMMUNICATION SKILLS ·</span>
+            <span>FULL STACK WEB DEVELOPMENT ·</span>
+            <span>AI-POWERED DEVELOPMENT ·</span>
+            <span>DATA STRUCTURES &amp; ALGORITHMS ·</span>
+            <span>PROMPT ENGINEERING ·</span>
+            <span>PROJECT MANAGEMENT ·</span>
+            <span>AI INTEGRATION IN WEB APPS ·</span>
+            <span>VIBE CODING ·</span>
+            <span>AI-ASSISTED UI/UX DESIGN ·</span>
+            <span>VIDEO EDITING ·</span>
+            <span>RAPID PROTOTYPING WITH AI ·</span>
+            <span>BASIC GAME DEVELOPMENT ·</span>
+            <span>COMMUNICATION SKILLS ·</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 4 — WORK EXPERIENCE
+         ========================================== -->
+    <section class="work-section" id="work">
+        <div class="container">
+            <span class="section-label reveal">Work Experience</span>
+
+            <div class="work-entry reveal">
+                <div class="work-left">
+                    <div class="work-number">01</div>
+                    <h3 class="work-role">Full Stack Developer</h3>
+                    <p class="work-company">Veulose</p>
+                    <span class="work-date">SEPT 2025 — PRESENT</span>
+                </div>
+                <div class="work-right">
+                    <ul>
+                        <li>Developed a full stack website based on a given design, translating visual concepts into
+                            functional interfaces</li>
+                        <li>Created a responsive and accessible user interface ensuring consistency across devices</li>
+                        <li>Leveraged AI-powered tooling for rapid prototyping and efficient output delivery</li>
+                        <li>Integrated backend functionality with frontend components for seamless data flow</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="work-entry reveal">
+                <div class="work-left">
+                    <div class="work-number">02</div>
+                    <h3 class="work-role">Project Manager</h3>
+                    <p class="work-company">EDC / E-Cell of JSS</p>
+                    <span class="work-date">AUG 2023 — JUL 2024</span>
+                </div>
+                <div class="work-right">
+                    <ul>
+                        <li>Led a team as Team Lead for a full-fledged website project from concept to delivery</li>
+                        <li>Handled frontend implementation based on UI/UX design specifications</li>
+                        <li>Coordinated cross-functional team members to meet project deadlines</li>
+                        <li>Managed project scope, timeline, and resource allocation effectively</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="work-entry reveal">
+                <div class="work-left">
+                    <div class="work-number">03</div>
+                    <h3 class="work-role">Web Designer</h3>
+                    <p class="work-company">Gruby</p>
+                    <span class="work-date">JAN 2024 — FEB 2024</span>
+                </div>
+                <div class="work-right">
+                    <ul>
+                        <li>Designed a portfolio website for the founder of Gruby during backend learning phase</li>
+                        <li>Simultaneously refined frontend development skills through hands-on implementation</li>
+                        <li>Delivered a polished, client-ready product within a tight timeline</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 5 — PROJECTS
+         ========================================== -->
+    <section class="projects-section" id="projects">
+        <div class="container">
+            <span class="section-label reveal">Projects</span>
+
+            <div class="projects-grid">
+                <div class="project-card reveal">
+                    <span class="project-num">01</span>
+                    <h3 class="project-title">Veulose Website</h3>
+                    <div class="project-tags">
+                        <span>Full Stack</span>
+                        <span>Responsive UI</span>
+                        <span>Backend Integration</span>
+                    </div>
+                    <p class="project-desc">Full stack website built for a client, featuring a custom responsive
+                        interface and backend support with AI-assisted development workflow.</p>
+                    <a href="https://blogs.yashdeployements.dev" target="_blank" rel="noopener noreferrer"
+                        class="project-link">VIEW PROJECT →</a>
+                </div>
+
+                <div class="project-card reveal">
+                    <span class="project-num">02</span>
+                    <h3 class="project-title">JSS E-Cell Website</h3>
+                    <div class="project-tags">
+                        <span>Frontend</span>
+                        <span>Team Lead</span>
+                        <span>Project Management</span>
+                    </div>
+                    <p class="project-desc">Led frontend development for the official website of EDC/E-Cell at JSSATE
+                        Noida, coordinating design-to-code implementation.</p>
+                    <a href="https://www.edcjss.com/" target="_blank" rel="noopener noreferrer"
+                        class="project-link">VIEW PROJECT →</a>
+                </div>
+
+                <div class="project-card reveal">
+                    <span class="project-num">03</span>
+                    <h3 class="project-title">Gruby Portfolio</h3>
+                    <div class="project-tags">
+                        <span>Web Design</span>
+                        <span>Frontend</span>
+                    </div>
+                    <p class="project-desc">Designed and built a portfolio website for the founder of Gruby, balancing
+                        aesthetics with performance and usability.</p>
+                    <a href="#" class="project-link">VIEW PROJECT →</a>
+                </div>
+
+                <div class="project-card reveal">
+                    <span class="project-num">04</span>
+                    <h3 class="project-title">Coming Soon</h3>
+                    <div class="project-tags">
+                        <span>In Progress</span>
+                    </div>
+                    <p class="project-desc">New projects currently in development. Stay tuned for more work showcasing
+                        full stack capabilities and creative problem-solving.</p>
+                    <a href="#" class="project-link">COMING SOON →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 6 — ABOUT
+         ========================================== -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <span class="section-label reveal">About Me</span>
+
+            <div class="about-grid">
+                <div class="reveal">
+                    <h2 class="about-heading">Results-oriented.<br>Curious.<br>Builder.</h2>
+                </div>
+
+                <div class="reveal">
+                    <p class="about-text">
+                        I'm Yash Agarwal, a B.Tech student at JSSATE Noida with a passion for building full stack
+                        digital experiences. From designing responsive frontends to integrating backend logic, I bring
+                        both technical depth and creative thinking to every project. I also dabble in video editing and
+                        basic game development.
+                    </p>
+
+                    <div class="about-stats">
+                        <span>2+ YEARS EXPERIENCE</span>
+                        <span>3 ROLES</span>
+                        <span>1 ONGOING PROJECT</span>
+                    </div>
+
+                    <div class="about-education">
+                        <strong>B.Tech</strong> — JSSATE Noida, 201301
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 7 — CONTACT / FOOTER
+         ========================================== -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2 class="contact-heading reveal">LET'S BUILD<br>SOMETHING<br>TOGETHER</h2>
+            <p class="contact-sub reveal">I AM CURRENTLY AVAILABLE FOR FREELANCE AND FULL-TIME OPPORTUNITIES</p>
+
+            <div class="contact-buttons reveal">
+                <a href="mailto:yasssh2004@gmail.com" class="btn" id="btn-email">EMAIL</a>
+                <a href="https://www.linkedin.com/in/yashagarwal-b0709a2a5" target="_blank" rel="noopener" class="btn"
+                    id="btn-linkedin">LINKEDIN</a>
+                <a href="tel:+918429893588" class="btn" id="btn-phone">PHONE</a>
+                <a href="#" class="btn" id="btn-resume">RESUME</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-bar">
+        <p>© 2025 YASH AGARWAL. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <!-- ==========================================
+         JAVASCRIPT
+         ========================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initScrollReveal();
+            initSmoothScroll();
+            initHamburger();
+        });
+
+        // Scroll Reveal
+        function initScrollReveal() {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+            );
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // Smooth Scroll for anchors
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+                    if (href === '#') return;
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const navHeight = 64;
+                        const top = target.getBoundingClientRect().top + window.scrollY - navHeight;
+                        window.scrollTo({ top, behavior: 'smooth' });
+                    }
+                    // Close mobile menu
+                    document.getElementById('nav-mobile').classList.remove('open');
+                    document.getElementById('nav-hamburger').classList.remove('active');
+                });
+            });
+        }
+
+        // Hamburger toggle
+        function initHamburger() {
+            const hamburger = document.getElementById('nav-hamburger');
+            const mobileMenu = document.getElementById('nav-mobile');
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                mobileMenu.classList.toggle('open');
+            });
+        }
+    </script>
+</body>
+
+</html>

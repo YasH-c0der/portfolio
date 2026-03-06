@@ -1,0 +1,16 @@
+{
+  "name": "web-builder-2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "stitch": "stitch-mcp start --config .stitch/mcp-config.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@_davideast/stitch-mcp": "^0.4.0"
+  }
+}
