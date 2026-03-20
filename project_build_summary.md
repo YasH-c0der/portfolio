@@ -11,3 +11,4 @@
 ### 2026-03-20
 - **Accomplished:** Initialized `project_build_summary.md` to track project state moving forward.
 - **Changes:** Renaming the generic "Projects" section to "Development Projects" to make room for a new "Design Projects" block underneath, within the same navigation context.
+- **Git State:** Connected and pushed the codebase to the remote repository: `https://github.com/YasH-c0der/portfolio.git`.
